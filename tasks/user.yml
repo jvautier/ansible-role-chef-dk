@@ -1,0 +1,43 @@
+---
+- name: 'configure - user {{ user_item.name }} - chef gems list'
+  command: chef gem list
+  register: chef_gem_list
+  changed_when: false
+- name: 'configure - user {{ user_item.name }} - chef gems user'
+  command: 'chef gem install {{ gem_user }}'
+  with_items: '{{ user_item.gems }}'
+  loop_control:
+    loop_var: gem_user
+  when:
+    - user_item.gems is defined
+    - gem_user not in chef_gem_list.stdout
+- name: 'configure - user {{ user_item.name }} - chef gems global'
+  with_items: '{{ chef_dk_gems }}'
+  loop_control:
+    loop_var: gem_global
+  when:
+    - chef_dk_gems is defined
+    - gem_global not in chef_gem_list.stdout
+  command: 'chef gem install {{ gem_global }}'
+# - name: 'configure - user {{ user_item.name }} - ensures ~/.berkshelf dir exists'
+#   file:
+#     path: '/home/{{ user_item.name }}/.berkshelf'
+#     state: directory
+# - name: 'configure - user {{ user_item.name }} - generate berkshelf config'
+#   when: chef_dk_config is defined
+#   template:
+#     src: templates/berkshelf/config.json.j2
+#     dest: '/home/{{ user_item.name }}/.berkshelf/config-ansible.json'
+#     mode: 420
+# - name: >-
+#     configure - user {{ user_item.name }} -  ensures /home/{{ user_item.name
+#     }}/.chef dir exists
+#   file:
+#     path: '/home/{{ user_item.name }}/.chef'
+#     state: directory
+# - name: 'configure - user {{ user_item.name }} - generate knife config'
+#   when: user_item.value.knife_config is defined
+#   template:
+#     src: templates/chef/knife.rb.j2
+#     dest: '/home/{{ user_item.name }}/.chef/knife-ansible.rb'
+#     mode: 420

@@ -1,0 +1,6 @@
+---
+- name: Install chefdk-{{ chef_dk.version }}
+  when: ansible_distribution == 'CentOS'
+  yum:
+    name: https://packages.chef.io/files/stable/chefdk/{{ chef_dk.version }}/el/7/chefdk-{{ chef_dk.version }}-1.el7.x86_64.rpm
+    state: present
