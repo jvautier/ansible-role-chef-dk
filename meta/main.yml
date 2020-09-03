@@ -1,6 +1,6 @@
 galaxy_info:
   role_name: chef-dk
-  description: Install chef dk
+  description: Install chef-dk
   author: jvautier
 
   # If the issue tracker for your role is not on github, uncomment the
