@@ -1,0 +1,9 @@
+---
+# See https://github.com/jvautier/project-cli
+fullname: jvautier/ansible-role-chef-dk
+description: Install chef-dk through ansible
+tags:
+  - ansible
+  - ansible-role
+  - chef-dk
+github: {}
